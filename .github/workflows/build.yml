@@ -1,0 +1,20 @@
+name: build
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  runs-on: windows-2022
+  steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+        
+    - run: .\build.bat ios
+    
+    - uses: actions/upload-artifact@v4
+      with:
+        name: mirai-ios.mcpack
+        path: pack/*
