@@ -23,7 +23,6 @@ jobs:
     - uses: actions/setup-python@v5
       with:
         python-version: '3.11' 
-        cache: 'pip'
     - run: pip install lazurite==0.8.4
     - run: |
         curl -L "https://github.com/bambosan/bgfx-mcbe/releases/download/binaries/shaderc-linux-x64.zip" -o shaderc.zip
@@ -49,7 +48,6 @@ jobs:
     - uses: actions/setup-python@v5
       with:
         python-version: '3.11' 
-        cache: 'pip'
     - run: pip install lazurite==0.8.4
     - run: |
         curl -L "https://github.com/bambosan/bgfx-mcbe/releases/download/binaries/shaderc-linux-x64.zip" -o shaderc.zip
@@ -76,18 +74,9 @@ jobs:
     - uses: actions/setup-python@v5
       with:
         python-version: '3.11' 
-        cache: 'pip'
     - run: pip install lazurite==0.8.4
     - run: |
-        Invoke-WebRequest -Uri 'https://github.com/bambosan/bgfx-mcbe/releases/download/binaries/shaderc-win-x64.zip' -OutFile 'shaderc.zip'
-        Expand-Archive -Force 'shaderc.zip' .
-        Rename-Item -Path shadercRelease.exe -NewName shaderc.exe
-        mkdir pack\renderer\materials
-        mkdir pack\subpacks\novc\renderer\materials
-        mkdir pack\subpacks\vc\renderer\materials
-        python -m lazurite build src -p windows -o pack\renderer\materials
-        python -m lazurite build src -p windows features -o pack\subpacks\novc\renderer\materials
-        python -m lazurite build src -p windows features vclouds -o pack\subpacks\vc\renderer\materials
+        .\build.bat windows
     - uses: actions/upload-artifact@v4
       with:
         name: mirai-windows.mcpack
